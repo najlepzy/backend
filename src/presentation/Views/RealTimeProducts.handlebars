@@ -1,0 +1,26 @@
+<div>
+  <form id="add" action="#">
+    <label for="text">Add Product:</label>
+    <input id="text" type="text" />
+    <button onclick="submit()" type="submit">Add Product</button>
+  </form>
+</div>
+<div>
+  <form id="remove" action="#">
+    <label for="text">Remove Product:</label>
+    <input id="removeField" type="text" />
+    <button type="submit">Remove Product</button>
+  </form>
+</div>
+
+<ul id="productList">
+  {{#each products}}
+    <li class="productItem" key="{{this.id}}">{{this.title}}
+      <img class="Products" src="{{this.thumbnail}}" alt="img-product" />
+    </li>
+  {{/each}}
+</ul>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.min.js"
+></script>
+<script src="/public/JS/WebSocketClientProducts.js"></script>
