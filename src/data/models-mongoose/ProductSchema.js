@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import mongoose from "../../core/Connection.js";
+import mongoose from "../factories/mongooseAdapter.js";
 import mongoosePaginate from "mongoose-paginate-v2";
 
 const productsCollection = "Products";  

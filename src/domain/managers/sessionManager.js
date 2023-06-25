@@ -15,6 +15,12 @@ class SessionManager
     await loginValidation.parseAsync({ email, password });
 
     const user = await this.userRepository.getOneByEmail(email);
+
+    if(!user)
+    {
+      throw new Error('User dont exist.');
+    }
+    console.log(password, user)
     const isHashedPassword = await isValidPassword(password, user.password);
 
     if (!isHashedPassword)

@@ -1,17 +1,26 @@
-import { Schema } from "mongoose";
-import mongoose from "../../core/Connection.js";
-import mongoosePaginate from "mongoose-paginate-v2";
+import mongoose, { Schema } from "mongoose";
+import paginate from "mongoose-paginate-v2";
 
-  const userCollection = "users";  
+const userCollection = 'users';
 
-  const userModel = new mongoose.Schema({
-    email: { type: Schema.Types.String, require: true },
-    password: { type: Schema.Types.String, require: true },
-  });
+const UserSchema = new Schema({
+  firstName: { type: Schema.Types.String, required: true },
+  lastName: { type: Schema.Types.String },
+  email: { type: Schema.Types.String, unique: true, required: true },
+  age: { type: Schema.Types.Number, default: 18 },
+  role: { type: Schema.Types.ObjectId, index: true, ref: 'roles' },
+  isAdmin: { type: Schema.Types.Boolean, default: false },
+  password: { type: Schema.Types.String }
+});
 
-  userModel.plugin(mongoosePaginate);
+UserSchema.plugin(paginate);
 
-  /* third parameter is added to specify collection */
-  const userSchema = mongoose.model(userCollection, userModel, "users");
-  /* third parameter is added to specify collection */
-  export default userSchema;
+UserSchema.pre('find', function () {
+  this.populate(['role']);
+});
+
+UserSchema.pre('findOne', function () {
+  this.populate(['role']);
+});
+
+export default mongoose.model(userCollection, UserSchema);

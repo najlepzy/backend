@@ -1,10 +1,10 @@
 import cookieParser from "cookie-parser";
 import { Router } from "express";
 
-const encript = process.env.encript;
+const ENCRIPT = process.env.encript;
 const cookieRouter = Router();
 
-cookieRouter.use(cookieParser(encript));
+cookieRouter.use(cookieParser(ENCRIPT));
 
 cookieRouter.get("/", (request, response) => {
   response.send(request.signedCookies);
