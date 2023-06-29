@@ -11,6 +11,7 @@ import userRouter from "../../presentation/routes/userRouter.js";
 import roleRouter from "../../presentation/routes/RoleRouter.js";
 import handlebars from "express-handlebars";
 import nodemailer from "nodemailer";
+import twilio from 'twilio';
 import { resolve } from "path";
 import dotenv from "dotenv";
 class AppExpress {
@@ -82,7 +83,7 @@ class AppExpress {
       });
     });
 
-    this.app.get("/send-sms", (req, res) => {
+    this.app.get("/sendsms", (req, res) => {
       const accountSid = process.env.TWILIO_ACCOUNT_SID;
       const authToken = process.env.TWILIO_AUTH_TOKEN;
       const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
@@ -93,7 +94,7 @@ class AppExpress {
         .create({
           body: "Hello from Argentina!",
           from: twilioPhoneNumber,
-          to: "+54 1161330379",
+          to: twilioPhoneNumber,
         })
         .then((message) => {
           console.log("Message sent:", message.sid);
